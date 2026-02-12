@@ -20,21 +20,56 @@ envelope.addEventListener("click", () => {
     },50);
 });
 
-// Logic to move the NO btn
+// Logic to move the NO btn — cursor can never reach it
 
-noBtn.addEventListener("mouseover", () => {
-    const min = 200;
-    const max = 200;
+// Track current offset so the button moves in absolute terms
+let noBtnOffsetX = 0;
+let noBtnOffsetY = 0;
+const FLEE_RADIUS = 120; // px – how close cursor can get before button runs
 
-    const distance = Math.random() * (max - min) + min;
-    const angle = Math.random() * Math.PI * 2;
+document.addEventListener("mousemove", (e) => {
+    const rect = noBtn.getBoundingClientRect();
+    const btnCenterX = rect.left + rect.width / 2;
+    const btnCenterY = rect.top + rect.height / 2;
 
-    const moveX = Math.cos(angle) * distance;
-    const moveY = Math.sin(angle) * distance;
+    const dx = e.clientX - btnCenterX;
+    const dy = e.clientY - btnCenterY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
 
-    noBtn.style.transition = "transform 0.3s ease";
-    noBtn.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    if (dist < FLEE_RADIUS) {
+        // Jump away from the cursor
+        const jumpDist = 180 + Math.random() * 120; // 180-300px
+        // Flee in the opposite direction of the cursor (with some randomness)
+        const fleeAngle = Math.atan2(-dy, -dx) + (Math.random() - 0.5) * 1.2;
+
+        let newX = noBtnOffsetX + Math.cos(fleeAngle) * jumpDist;
+        let newY = noBtnOffsetY + Math.sin(fleeAngle) * jumpDist;
+
+        // Clamp to keep button fully inside viewport
+        const pad = 10;
+        const origRect = noBtn.getBoundingClientRect();
+        const origLeft = origRect.left - noBtnOffsetX;
+        const origTop = origRect.top - noBtnOffsetY;
+
+        const minX = pad - origLeft;
+        const minY = pad - origTop;
+        const maxX = window.innerWidth - pad - origRect.width - origLeft;
+        const maxY = window.innerHeight - pad - origRect.height - origTop;
+
+        newX = Math.max(minX, Math.min(maxX, newX));
+        newY = Math.max(minY, Math.min(maxY, newY));
+
+        noBtnOffsetX = newX;
+        noBtnOffsetY = newY;
+
+        noBtn.style.transition = "transform 0.25s ease-out";
+        noBtn.style.transform = `translate(${noBtnOffsetX}px, ${noBtnOffsetY}px)`;
+    }
 });
+
+// Block any click/touch on the No button just in case
+noBtn.addEventListener("click", (e) => e.preventDefault());
+noBtn.addEventListener("touchstart", (e) => e.preventDefault(), { passive: false });
 
 // Logic to make YES btn to grow
 
