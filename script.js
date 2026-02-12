@@ -129,5 +129,8 @@ yesBtn.addEventListener("click", () => {
 
     buttons.style.display = "none";
 
+    // Hide the No button that was moved to body
+    noBtn.style.display = "none";
+
     finalText.style.display = "block";
 });

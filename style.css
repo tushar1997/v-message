@@ -85,6 +85,11 @@ p {
     transition: width 0.4s ease;
 }
 
+.letter-window.final {
+    aspect-ratio: auto;
+    overflow: visible;
+}
+
 .letter-window.final .cat {
     width: 180px;
 }
