@@ -22,48 +22,58 @@ envelope.addEventListener("click", () => {
 
 // Logic to move the NO btn — cursor can never reach it
 
-// Track current offset so the button moves in absolute terms
-let noBtnOffsetX = 0;
-let noBtnOffsetY = 0;
-const FLEE_RADIUS = 120; // px – how close cursor can get before button runs
+let noBtnReady = false;
+let noBtnX = 0;
+let noBtnY = 0;
+const FLEE_RADIUS = 130; // px – how close cursor can get before button flees
+const PAD = 15;
+
+function initNoBtn() {
+    if (noBtnReady) return;
+    // Capture current on-screen position, then switch to fixed positioning
+    const rect = noBtn.getBoundingClientRect();
+    noBtnX = rect.left;
+    noBtnY = rect.top;
+    noBtn.style.position = "fixed";
+    noBtn.style.left = noBtnX + "px";
+    noBtn.style.top = noBtnY + "px";
+    noBtn.style.transform = "none";
+    noBtn.style.margin = "0";
+    noBtnReady = true;
+}
 
 document.addEventListener("mousemove", (e) => {
-    const rect = noBtn.getBoundingClientRect();
-    const btnCenterX = rect.left + rect.width / 2;
-    const btnCenterY = rect.top + rect.height / 2;
+    // Only activate after the letter is visible
+    if (letter.style.display !== "flex") return;
+    initNoBtn();
+
+    const w = noBtn.offsetWidth;
+    const h = noBtn.offsetHeight;
+    const btnCenterX = noBtnX + w / 2;
+    const btnCenterY = noBtnY + h / 2;
 
     const dx = e.clientX - btnCenterX;
     const dy = e.clientY - btnCenterY;
     const dist = Math.sqrt(dx * dx + dy * dy);
 
     if (dist < FLEE_RADIUS) {
-        // Jump away from the cursor
-        const jumpDist = 180 + Math.random() * 120; // 180-300px
-        // Flee in the opposite direction of the cursor (with some randomness)
-        const fleeAngle = Math.atan2(-dy, -dx) + (Math.random() - 0.5) * 1.2;
+        // Flee in the opposite direction of the cursor (with slight randomness)
+        const jumpDist = 160 + Math.random() * 100;
+        const fleeAngle = Math.atan2(-dy, -dx) + (Math.random() - 0.5) * 1.0;
 
-        let newX = noBtnOffsetX + Math.cos(fleeAngle) * jumpDist;
-        let newY = noBtnOffsetY + Math.sin(fleeAngle) * jumpDist;
+        let newX = noBtnX + Math.cos(fleeAngle) * jumpDist;
+        let newY = noBtnY + Math.sin(fleeAngle) * jumpDist;
 
         // Clamp to keep button fully inside viewport
-        const pad = 10;
-        const origRect = noBtn.getBoundingClientRect();
-        const origLeft = origRect.left - noBtnOffsetX;
-        const origTop = origRect.top - noBtnOffsetY;
+        newX = Math.max(PAD, Math.min(window.innerWidth - w - PAD, newX));
+        newY = Math.max(PAD, Math.min(window.innerHeight - h - PAD, newY));
 
-        const minX = pad - origLeft;
-        const minY = pad - origTop;
-        const maxX = window.innerWidth - pad - origRect.width - origLeft;
-        const maxY = window.innerHeight - pad - origRect.height - origTop;
+        noBtnX = newX;
+        noBtnY = newY;
 
-        newX = Math.max(minX, Math.min(maxX, newX));
-        newY = Math.max(minY, Math.min(maxY, newY));
-
-        noBtnOffsetX = newX;
-        noBtnOffsetY = newY;
-
-        noBtn.style.transition = "transform 0.25s ease-out";
-        noBtn.style.transform = `translate(${noBtnOffsetX}px, ${noBtnOffsetY}px)`;
+        noBtn.style.transition = "left 0.25s ease-out, top 0.25s ease-out";
+        noBtn.style.left = noBtnX + "px";
+        noBtn.style.top = noBtnY + "px";
     }
 });
 

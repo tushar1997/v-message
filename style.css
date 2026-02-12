@@ -122,10 +122,11 @@ display: inline-block;
 }
 
 .no-btn {
-    z-index: 1;
+    z-index: 999;
     position: relative;
     transition: transform 0.15s ease;
     cursor: default;
+    pointer-events: none;
 }
 
 .final-text{
