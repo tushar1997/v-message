@@ -30,22 +30,38 @@ const PAD = 15;
 
 function initNoBtn() {
     if (noBtnReady) return;
-    // Capture current on-screen position, then switch to fixed positioning
+
+    // Wait a frame so the letter-window .open transition has started
+    // and we can read a reasonable initial position
     const rect = noBtn.getBoundingClientRect();
     noBtnX = rect.left;
     noBtnY = rect.top;
+
+    // Move the button out of the transformed parent into <body>
+    // so that position:fixed works relative to the viewport
+    document.body.appendChild(noBtn);
+
     noBtn.style.position = "fixed";
     noBtn.style.left = noBtnX + "px";
     noBtn.style.top = noBtnY + "px";
     noBtn.style.transform = "none";
     noBtn.style.margin = "0";
+    noBtn.style.zIndex = "9999";
+    noBtn.style.pointerEvents = "none";
     noBtnReady = true;
 }
 
 document.addEventListener("mousemove", (e) => {
     // Only activate after the letter is visible
     if (letter.style.display !== "flex") return;
-    initNoBtn();
+
+    // Delay init slightly so the letter window is open and positioned
+    if (!noBtnReady) {
+        setTimeout(() => {
+            initNoBtn();
+        }, 400);
+        return;
+    }
 
     const w = noBtn.offsetWidth;
     const h = noBtn.offsetHeight;
@@ -59,7 +75,7 @@ document.addEventListener("mousemove", (e) => {
     if (dist < FLEE_RADIUS) {
         // Flee in the opposite direction of the cursor (with slight randomness)
         const jumpDist = 160 + Math.random() * 100;
-        const fleeAngle = Math.atan2(-dy, -dx) + (Math.random() - 0.5) * 1.0;
+        const fleeAngle = Math.atan2(-dy, -dx) + (Math.random() - 0.5) * 0.8;
 
         let newX = noBtnX + Math.cos(fleeAngle) * jumpDist;
         let newY = noBtnY + Math.sin(fleeAngle) * jumpDist;
@@ -78,8 +94,8 @@ document.addEventListener("mousemove", (e) => {
 });
 
 // Block any click/touch on the No button just in case
-noBtn.addEventListener("click", (e) => e.preventDefault());
-noBtn.addEventListener("touchstart", (e) => e.preventDefault(), { passive: false });
+noBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); });
+noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); e.stopPropagation(); }, { passive: false });
 
 // Logic to make YES btn to grow
 
