@@ -190,18 +190,7 @@ yesBtn.addEventListener("click", () => {
     }, 500);
 });
 
-// "Message for you" button — removes title text and final text, keeps image
+// "Message for you" button — redirects to external URL
 messageBtn.addEventListener("click", () => {
-    // Hide the "Yippeeee!" title
-    title.style.display = "none";
-
-    // Hide the final text ("Wohooooooooooo...")
-    finalText.style.display = "none";
-
-    // Make the image bigger
-    catImg.style.width = "200px";
-
-    // Hide the button itself after clicking
-    messageBtn.style.display = "none";
-    messageBtn.style.visibility = "hidden";
+    window.open("https://drive.google.com/file/d/1ISlqbjQ1bzwSuzbgpndcOo_n--0zZ2C_/view?usp=sharing", "_blank");
 });
