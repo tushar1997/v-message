@@ -37,6 +37,11 @@ function initNoBtn() {
     noBtnX = rect.left;
     noBtnY = rect.top;
 
+    // Preserve the space the No button occupied so the Yes button doesn't shift
+    const wrapper = noBtn.parentElement;
+    wrapper.style.width = rect.width + "px";
+    wrapper.style.height = rect.height + "px";
+
     // Move the button out of the transformed parent into <body>
     // so that position:fixed works relative to the viewport
     document.body.appendChild(noBtn);
