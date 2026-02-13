@@ -198,6 +198,9 @@ messageBtn.addEventListener("click", () => {
     // Hide the final text ("Wohooooooooooo...")
     finalText.style.display = "none";
 
+    // Make the image bigger
+    catImg.style.width = "200px";
+
     // Hide the button itself after clicking
     messageBtn.style.display = "none";
     messageBtn.style.visibility = "hidden";
