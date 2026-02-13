@@ -154,19 +154,7 @@ messageBtn.style.cssText = `
     z-index: 10000;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     display: none;
-    animation: msgBtnPulse 1s ease-in-out infinite;
 `;
-
-// Inject keyframes for the blink/pulse animation
-const style = document.createElement("style");
-style.textContent = `
-    @keyframes msgBtnPulse {
-        0%   { transform: scale(1); opacity: 1; }
-        50%  { transform: scale(1.1); opacity: 0.6; }
-        100% { transform: scale(1); opacity: 1; }
-    }
-`;
-document.head.appendChild(style);
 
 document.body.appendChild(messageBtn);
 
@@ -187,6 +175,19 @@ yesBtn.addEventListener("click", () => {
     // Show the "message for you" button
     messageBtn.style.display = "block";
     messageBtn.style.position = "fixed";
+
+    // Start blink animation via JS
+    let blinkOn = true;
+    const blinkInterval = setInterval(() => {
+        if (messageBtn.style.display === "none") {
+            clearInterval(blinkInterval);
+            return;
+        }
+        blinkOn = !blinkOn;
+        messageBtn.style.opacity = blinkOn ? "1" : "0.4";
+        messageBtn.style.transform = blinkOn ? "scale(1)" : "scale(1.1)";
+        messageBtn.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+    }, 500);
 });
 
 // "Message for you" button — removes title text and final text, keeps image
