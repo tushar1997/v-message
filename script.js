@@ -143,13 +143,13 @@ messageBtn.style.cssText = `
     position: fixed;
     bottom: 20px;
     right: 20px;
-    padding: 10px 20px;
+    padding: 16px 32px;
     font-family: 'Pixelify Sans', sans-serif;
-    font-size: 16px;
+    font-size: 24px;
     background: linear-gradient(135deg, #ff6b6b, #ee5a24);
     color: #fff;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
     z-index: 10000;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
