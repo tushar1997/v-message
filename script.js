@@ -135,6 +135,13 @@ noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); e.stopPropagat
 
 // YES is clicked
 
+// Create "Message for you" button dynamically and append to body
+const messageBtn = document.createElement("button");
+messageBtn.id = "message-btn";
+messageBtn.textContent = "Message for you";
+messageBtn.style.display = "none";
+document.body.appendChild(messageBtn);
+
 yesBtn.addEventListener("click", () => {
     title.textContent = "Yippeeee!";
 
@@ -150,11 +157,11 @@ yesBtn.addEventListener("click", () => {
     finalText.style.display = "block";
 
     // Show the "message for you" button
-    document.getElementById("message-btn").style.display = "block";
+    messageBtn.style.display = "block";
 });
 
 // "Message for you" button — removes font styling and images, keeps box and text
-document.getElementById("message-btn").addEventListener("click", () => {
+messageBtn.addEventListener("click", () => {
     // Remove all images inside the letter window
     const letterWindow = document.querySelector(".letter-window");
     letterWindow.querySelectorAll("img").forEach(img => img.style.display = "none");
@@ -164,5 +171,5 @@ document.getElementById("message-btn").addEventListener("click", () => {
     letterWindow.querySelectorAll("*").forEach(el => el.style.fontFamily = "sans-serif");
 
     // Hide the button itself after clicking
-    document.getElementById("message-btn").style.display = "none";
+    messageBtn.style.display = "none";
 });
