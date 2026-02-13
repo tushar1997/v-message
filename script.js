@@ -139,7 +139,22 @@ noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); e.stopPropagat
 const messageBtn = document.createElement("button");
 messageBtn.id = "message-btn";
 messageBtn.textContent = "Message for you";
-messageBtn.style.display = "none";
+messageBtn.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    font-family: 'Pixelify Sans', sans-serif;
+    font-size: 16px;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 10000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    display: none;
+`;
 document.body.appendChild(messageBtn);
 
 yesBtn.addEventListener("click", () => {
@@ -158,6 +173,7 @@ yesBtn.addEventListener("click", () => {
 
     // Show the "message for you" button
     messageBtn.style.display = "block";
+    messageBtn.style.position = "fixed";
 });
 
 // "Message for you" button — removes font styling and images, keeps box and text
@@ -172,4 +188,5 @@ messageBtn.addEventListener("click", () => {
 
     // Hide the button itself after clicking
     messageBtn.style.display = "none";
+    messageBtn.style.visibility = "hidden";
 });
