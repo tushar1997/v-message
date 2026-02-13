@@ -123,7 +123,7 @@ noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); e.stopPropagat
 yesBtn.addEventListener("click", () => {
     title.textContent = "Yippeeee!";
 
-    catImg.src = "cat_dance.gif";
+    catImg.src = "she said yes.png";
 
     document.querySelector(".letter-window").classList.add("final");
 
