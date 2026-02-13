@@ -37,7 +37,17 @@ function initNoBtn() {
     noBtnX = rect.left;
     noBtnY = rect.top;
 
-    // Preserve the space the No button occupied so the Yes button doesn't shift
+    // Lock the buttons container layout so nothing shifts
+    const buttonsRect = buttons.getBoundingClientRect();
+    buttons.style.width = buttonsRect.width + "px";
+    buttons.style.justifyContent = "flex-start";
+    buttons.style.position = "relative";
+
+    // Fix the Yes button in its current visual position within the container
+    const yesRect = yesBtn.getBoundingClientRect();
+    yesBtn.style.marginLeft = (yesRect.left - buttonsRect.left) + "px";
+
+    // Preserve the space the No button occupied
     const wrapper = noBtn.parentElement;
     wrapper.style.width = rect.width + "px";
     wrapper.style.height = rect.height + "px";
