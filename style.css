@@ -92,10 +92,7 @@ p {
 }
 
 .letter-window.final {
-    aspect-ratio: auto;
     overflow: visible;
-    background-size: 100% 100%;
-    padding-bottom: 40px;
 }
 
 .letter-window.final .cat {
