@@ -190,7 +190,7 @@ yesBtn.addEventListener("click", () => {
     }, 500);
 });
 
-// "Message for you" button — removes title text and final text, replaces image with video
+// "Message for you" button — removes title text and final text, keeps image
 messageBtn.addEventListener("click", () => {
     // Hide the "Yippeeee!" title
     title.style.display = "none";
@@ -198,16 +198,8 @@ messageBtn.addEventListener("click", () => {
     // Hide the final text ("Wohooooooooooo...")
     finalText.style.display = "none";
 
-    // Replace the image with a video
-    const video = document.createElement("video");
-    video.src = "IMG_0125.mov";
-    video.controls = true;
-    video.autoplay = true;
-    video.style.width = "90%";
-    video.style.maxWidth = "500px";
-    video.style.borderRadius = "12px";
-    video.style.marginTop = "10px";
-    catImg.replaceWith(video);
+    // Make the image bigger
+    catImg.style.width = "200px";
 
     // Hide the button itself after clicking
     messageBtn.style.display = "none";
