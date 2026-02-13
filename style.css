@@ -94,6 +94,8 @@ p {
 .letter-window.final {
     aspect-ratio: auto;
     overflow: visible;
+    background-size: 100% 100%;
+    padding-bottom: 40px;
 }
 
 .letter-window.final .cat {
@@ -141,7 +143,7 @@ display: inline-block;
 }
 
 .final-text{
-    font-size: 22px;
+    font-size: 18px;
     line-height: 1.4;
     text-align: center;
     display: inline-block;
