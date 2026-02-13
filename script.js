@@ -148,4 +148,21 @@ yesBtn.addEventListener("click", () => {
     noBtn.style.display = "none";
 
     finalText.style.display = "block";
+
+    // Show the "message for you" button
+    document.getElementById("message-btn").style.display = "block";
+});
+
+// "Message for you" button — removes font styling and images, keeps box and text
+document.getElementById("message-btn").addEventListener("click", () => {
+    // Remove all images inside the letter window
+    const letterWindow = document.querySelector(".letter-window");
+    letterWindow.querySelectorAll("img").forEach(img => img.style.display = "none");
+
+    // Remove custom font
+    document.body.style.fontFamily = "sans-serif";
+    letterWindow.querySelectorAll("*").forEach(el => el.style.fontFamily = "sans-serif");
+
+    // Hide the button itself after clicking
+    document.getElementById("message-btn").style.display = "none";
 });
