@@ -192,5 +192,11 @@ yesBtn.addEventListener("click", () => {
 
 // "Message for you" button — redirects to external URL
 messageBtn.addEventListener("click", () => {
-    window.open("https://drive.google.com/file/d/1ISlqbjQ1bzwSuzbgpndcOo_n--0zZ2C_/view?usp=sharing", "_blank");
+    const link = document.createElement("a");
+    link.href = "https://drive.google.com/file/d/1ISlqbjQ1bzwSuzbgpndcOo_n--0zZ2C_/view?usp=sharing";
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 });
