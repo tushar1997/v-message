@@ -176,15 +176,13 @@ yesBtn.addEventListener("click", () => {
     messageBtn.style.position = "fixed";
 });
 
-// "Message for you" button — removes font styling and images, keeps box and text
+// "Message for you" button — removes title text and final text, keeps image
 messageBtn.addEventListener("click", () => {
-    // Remove all images inside the letter window
-    const letterWindow = document.querySelector(".letter-window");
-    letterWindow.querySelectorAll("img").forEach(img => img.style.display = "none");
+    // Hide the "Yippeeee!" title
+    title.style.display = "none";
 
-    // Remove custom font
-    document.body.style.fontFamily = "sans-serif";
-    letterWindow.querySelectorAll("*").forEach(el => el.style.fontFamily = "sans-serif");
+    // Hide the final text ("Wohooooooooooo...")
+    finalText.style.display = "none";
 
     // Hide the button itself after clicking
     messageBtn.style.display = "none";
